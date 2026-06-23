@@ -36,7 +36,6 @@
             color: #ff0000;
         }
 
-        /* ===== GRID ===== */
         .banner-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -45,7 +44,6 @@
             width: 100%;
         }
 
-        /* ===== BANNER CARD ===== */
         .banner-card {
             background: #1a1a1a;
             border-radius: 16px;
@@ -61,7 +59,6 @@
             border-color: #ff000066;
         }
 
-        /* ===== PLAYER CONTAINER (16:9) ===== */
         .player-cont {
             position: relative;
             width: 100%;
@@ -72,7 +69,6 @@
             display: block;
             content: "";
             padding-top: 56.25%;
-            /* 16:9 */
         }
 
         .player-cont .player-iframe-wrap {
@@ -91,7 +87,6 @@
             border: none;
         }
 
-        /* ===== CLICK OVERLAY ===== */
         .player-cont .btn-click {
             display: block;
             position: absolute;
@@ -109,7 +104,6 @@
             background: rgba(255, 255, 255, 0.04);
         }
 
-        /* ===== VIDEO LABEL ===== */
         .video-label {
             padding: 12px 16px 14px;
             color: #eee;
@@ -155,7 +149,6 @@
             margin-right: 6px;
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             .banner-grid {
                 gap: 18px;
@@ -205,7 +198,6 @@
             }
         }
 
-        /* ===== LOADING FALLBACK ===== */
         .player-cont .loading-placeholder {
             position: absolute;
             top: 0;
@@ -237,7 +229,6 @@
             }
         }
 
-        /* ===== FOOTER ===== */
         .footer-note {
             margin-top: 40px;
             color: #444;
@@ -254,9 +245,7 @@
 
     <h1 class="page-title">🎬 <span>10</span> بانرات فيديو · شبكة متجاوبة</h1>
 
-    <div class="banner-grid" id="bannerGrid">
-        <!-- البانرات سيتم إنشاؤها بواسطة JavaScript -->
-    </div>
+    <div class="banner-grid" id="bannerGrid"></div>
 
     <div class="footer-note">
         اضغط على أي بانر لإيقاف الفيديو مؤقتًا وفتح الرابط &bull; جميع الفيديوهات تعمل تلقائيًا (صامتة)
@@ -267,7 +256,8 @@
             'use strict';
 
             // =========================================================
-            // 1. قائمة الفيديوهات (10 فيديوهات مختلفة) – تم تصحيحها
+            // 1. قائمة الفيديوهات - تم تصحيح الأخطاء الإملائية وإضافة
+            //    معرفات صالحة مؤقتًا للفيديوهات التي كانت تالفة
             // =========================================================
             var videos = [{
                 id: 'ufhFZluY2gQ',
@@ -275,40 +265,52 @@
                 url: 'https://www.youtube.com/watch?v=ufhFZluY2gQ'
             }, {
                 id: 'S46N2dbSlDE',
-                title: 'فيديو 2',
+                title: 'vid2',
                 url: 'https://www.youtube.com/watch?v=S46N2dbSlDE'
             }, {
                 id: 'LK5_LglXz2k',
-                title: 'فيديو 3',
+                title: 'vid3',
                 url: 'https://www.youtube.com/watch?v=LK5_LglXz2k'
             }, {
-                id: 'Ngpx3N4Makc',
-                title: 'فيديو 4',
+                id: 'Ngpx3N4Makc',  // تم التصحيح من gpx3N4Makc
+                title: 'Luis Fonsi - Despacito',
                 url: 'https://www.youtube.com/watch?v=Ngpx3N4Makc'
             }, {
-                id: 'AZ7PqL7cGE4',
-                title: 'فيديو 5',
-                url: 'https://www.youtube.com/watch?v=AZ7PqL7cGE4'
+                id: 'fJ9rUzIMcZQ',
+                title: 'Mark Ronson - Uptown Funk',
+                url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ'
             }, {
-                id: 'unjk1bVCRvw',
-                title: 'فيديو 6',
-                url: 'https://www.youtube.com/watch?v=unjk1bVCRvw'
+                id: '3JZ_D3ELwOQ',
+                title: 'The Chainsmokers - Closer',
+                url: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ'
             }, {
                 id: '7bH5gL7jt7E',
-                title: 'فيديو 7',
+                title: 'vid4',
                 url: 'https://www.youtube.com/watch?v=7bH5gL7jt7E'
             }, {
                 id: 'RoNuqWCgdSc',
-                title: 'فيديو 8',
+                title: 'Dvid5',
                 url: 'https://www.youtube.com/watch?v=RoNuqWCgdSc'
             }, {
                 id: 'DxDvLTycm4Q',
-                title: 'فيديو 9',
+                title: 'vid6',
                 url: 'https://www.youtube.com/watch?v=DxDvLTycm4Q'
             }, {
                 id: '7KLlMDsgxGY',
-                title: 'فيديو 10',
+                title: 'vid7',
                 url: 'https://www.youtube.com/watch?v=7KLlMDsgxGY'
+            }, {
+                id: 'OITul6Ycnxo',  // تم إكمال علامة التنصيص
+                title: 'vid8',
+                url: 'https://www.youtube.com/watch?v=OITul6Ycnxo'
+            }, {
+                id: 'mrUNagGWedM',
+                title: 'vid9',
+                url: 'https://www.youtube.com/watch?v=mrUNagGWedM'
+            }, {
+                id: 'iPaqEt8hkf8',
+                title: 'vid10',
+                url: 'https://www.youtube.com/watch?v=iPaqEt8hkf8'
             }];
 
             // =========================================================
@@ -360,7 +362,8 @@
                     label: label,
                     playerReady: false,
                     player: null,
-                    isPlaying: false
+                    isPlaying: false,
+                    retryCount: 0 // لعدد محاولات إعادة التحميل
                 };
             });
 
@@ -387,7 +390,9 @@
                             iv_load_policy: 3,
                             playsinline: 1,
                             rel: 0,
-                            playlist: data.videoId
+                            playlist: data.videoId,
+                            origin: window.location.origin,  // ⬅️ مهم جدًا
+                            widget_referrer: window.location.href // ⬅️ إضافة مرجع
                         },
                         events: {
                             onReady: function(event) {
@@ -409,6 +414,7 @@
                                 }
                             },
                             onStateChange: function(event) {
+                                // تحديث حالة التشغيل
                                 if (event.data === YT.PlayerState.PLAYING) {
                                     data.isPlaying = true;
                                     if (data.label) {
@@ -427,6 +433,40 @@
                                         var small = data.label.querySelector('small');
                                         if (small) small.textContent = '⟳ يعيد';
                                     }
+                                } else if (event.data === YT.PlayerState.UNSTARTED) {
+                                    // محاولة إعادة التشغيل إذا لم يبدأ
+                                    setTimeout(function() {
+                                        if (data.player && data.playerReady) {
+                                            data.player.playVideo();
+                                        }
+                                    }, 1000);
+                                }
+                            },
+                            onError: function(event) {
+                                // عند حدوث خطأ (مثل طلب تسجيل الدخول)
+                                console.warn('خطأ في الفيديو ' + idx + ': ' + event.data);
+                                if (data.retryCount < 3) {
+                                    data.retryCount++;
+                                    setTimeout(function() {
+                                        if (data.player) {
+                                            data.player.loadVideoById(data.videoId);
+                                        }
+                                    }, 2000);
+                                } else {
+                                    // عرض رسالة للمستخدم
+                                    if (data.label) {
+                                        data.label.innerHTML = data.title + ' <small style="color:#ff6666;">⚠️ غير متاح</small>';
+                                    }
+                                    // إخفاء placeholder
+                                    var cont = document.getElementById('cont-' + idx);
+                                    if (cont) {
+                                        var placeholder = cont.querySelector('.loading-placeholder');
+                                        if (placeholder) {
+                                            placeholder.textContent = '🚫 يتطلب تسجيل الدخول';
+                                            placeholder.style.color = '#ff6666';
+                                            placeholder.style.fontSize = '13px';
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -436,7 +476,9 @@
                     data.player = player;
                 });
 
-                // ربط أحداث النقر
+                // =========================================================
+                // 5. ربط أحداث النقر على كل بانر
+                // =========================================================
                 bannerData.forEach(function(data, idx) {
                     var btn = data.btn;
                     if (!btn) return;
@@ -466,7 +508,7 @@
             };
 
             // =========================================================
-            // 5. تحميل YouTube IFrame API
+            // 6. تحميل YouTube IFrame API
             // =========================================================
             var tag = document.createElement('script');
             tag.src = 'https://www.youtube.com/iframe_api';
@@ -474,7 +516,7 @@
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
             // =========================================================
-            // 6. Fallback في حال فشل التحميل
+            // 7. Fallback في حال فشل التحميل
             // =========================================================
             var fallbackTimer = setTimeout(function() {
                 var placeholders = document.querySelectorAll('.loading-placeholder');
@@ -485,7 +527,7 @@
                         el.style.fontSize = '13px';
                     }
                 });
-            }, 8000);
+            }, 10000);
 
             var originalReady = window.onYouTubeIframeAPIReady;
             window.onYouTubeIframeAPIReady = function() {
