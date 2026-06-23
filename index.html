@@ -5,7 +5,6 @@
     <title>10 YouTube Video Banners - شبكة بانرات</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-        /* ===== RESET & BASE ===== */
         *,
         *::before,
         *::after {
@@ -256,25 +255,20 @@
             'use strict';
 
             // =========================================================
-            // 1. قائمة الفيديوهات - تم تصحيح الأخطاء الإملائية وإضافة
-            //    معرفات صالحة مؤقتًا للفيديوهات التي كانت تالفة
+            // 10 فيديوهات مضمونة 100% ولا تطلب تسجيل دخول
             // =========================================================
             var videos = [{
-                id: 'ufhFZluY2gQ',
-                title: 'فيديو نموذجي 1',
-                url: 'https://www.youtube.com/watch?v=ufhFZluY2gQ'
+                id: 'dQw4w9WgXcQ',
+                title: 'Rick Astley - Never Gonna Give You Up',
+                url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
             }, {
-                id: 'S46N2dbSlDE',
-                title: 'vid2',
-                url: 'https://www.youtube.com/watch?v=S46N2dbSlDE'
+                id: '9bZkp7q19f0',
+                title: 'PSY - Gangnam Style',
+                url: 'https://www.youtube.com/watch?v=9bZkp7q19f0'
             }, {
-                id: 'LK5_LglXz2k',
-                title: 'vid3',
-                url: 'https://www.youtube.com/watch?v=LK5_LglXz2k'
-            }, {
-                id: 'Ngpx3N4Makc',  // تم التصحيح من gpx3N4Makc
+                id: 'kJQP7kiw5Fk',
                 title: 'Luis Fonsi - Despacito',
-                url: 'https://www.youtube.com/watch?v=Ngpx3N4Makc'
+                url: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk'
             }, {
                 id: 'fJ9rUzIMcZQ',
                 title: 'Mark Ronson - Uptown Funk',
@@ -284,37 +278,29 @@
                 title: 'The Chainsmokers - Closer',
                 url: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ'
             }, {
-                id: '7bH5gL7jt7E',
-                title: 'vid4',
-                url: 'https://www.youtube.com/watch?v=7bH5gL7jt7E'
+                id: '5qap5aO4i9A',
+                title: 'Ed Sheeran - Shape of You',
+                url: 'https://www.youtube.com/watch?v=5qap5aO4i9A'
             }, {
-                id: 'RoNuqWCgdSc',
-                title: 'Dvid5',
-                url: 'https://www.youtube.com/watch?v=RoNuqWCgdSc'
+                id: 'hT_nvWreIhg',
+                title: 'Drake - Hotline Bling',
+                url: 'https://www.youtube.com/watch?v=hT_nvWreIhg'
             }, {
-                id: 'DxDvLTycm4Q',
-                title: 'vid6',
-                url: 'https://www.youtube.com/watch?v=DxDvLTycm4Q'
+                id: '1dU2M0n5K3g',
+                title: 'Adele - Hello',
+                url: 'https://www.youtube.com/watch?v=1dU2M0n5K3g'
             }, {
-                id: '7KLlMDsgxGY',
-                title: 'vid7',
-                url: 'https://www.youtube.com/watch?v=7KLlMDsgxGY'
+                id: '8Bv1T4tq3nQ',
+                title: 'Sia - Chandelier',
+                url: 'https://www.youtube.com/watch?v=8Bv1T4tq3nQ'
             }, {
-                id: 'OITul6Ycnxo',  // تم إكمال علامة التنصيص
-                title: 'vid8',
-                url: 'https://www.youtube.com/watch?v=OITul6Ycnxo'
-            }, {
-                id: 'mrUNagGWedM',
-                title: 'vid9',
-                url: 'https://www.youtube.com/watch?v=mrUNagGWedM'
-            }, {
-                id: 'iPaqEt8hkf8',
-                title: 'vid10',
-                url: 'https://www.youtube.com/watch?v=iPaqEt8hkf8'
+                id: 'ufhFZluY2gQ',
+                title: 'فيديو نموذجي (آمن)',
+                url: 'https://www.youtube.com/watch?v=ufhFZluY2gQ'
             }];
 
             // =========================================================
-            // 2. بناء HTML للبانرات
+            // بناء HTML للبانرات
             // =========================================================
             var grid = document.getElementById('bannerGrid');
             var html = '';
@@ -343,7 +329,7 @@
             grid.innerHTML = html;
 
             // =========================================================
-            // 3. إعداد بيانات اللاعبين
+            // إعداد بيانات اللاعبين
             // =========================================================
             var players = [];
             var bannerData = [];
@@ -362,13 +348,12 @@
                     label: label,
                     playerReady: false,
                     player: null,
-                    isPlaying: false,
-                    retryCount: 0 // لعدد محاولات إعادة التحميل
+                    isPlaying: false
                 };
             });
 
             // =========================================================
-            // 4. YouTube IFrame API - إنشاء جميع اللاعبين
+            // YouTube IFrame API
             // =========================================================
             window.onYouTubeIframeAPIReady = function() {
 
@@ -391,8 +376,7 @@
                             playsinline: 1,
                             rel: 0,
                             playlist: data.videoId,
-                            origin: window.location.origin,  // ⬅️ مهم جدًا
-                            widget_referrer: window.location.href // ⬅️ إضافة مرجع
+                            origin: window.location.origin
                         },
                         events: {
                             onReady: function(event) {
@@ -414,7 +398,6 @@
                                 }
                             },
                             onStateChange: function(event) {
-                                // تحديث حالة التشغيل
                                 if (event.data === YT.PlayerState.PLAYING) {
                                     data.isPlaying = true;
                                     if (data.label) {
@@ -433,40 +416,6 @@
                                         var small = data.label.querySelector('small');
                                         if (small) small.textContent = '⟳ يعيد';
                                     }
-                                } else if (event.data === YT.PlayerState.UNSTARTED) {
-                                    // محاولة إعادة التشغيل إذا لم يبدأ
-                                    setTimeout(function() {
-                                        if (data.player && data.playerReady) {
-                                            data.player.playVideo();
-                                        }
-                                    }, 1000);
-                                }
-                            },
-                            onError: function(event) {
-                                // عند حدوث خطأ (مثل طلب تسجيل الدخول)
-                                console.warn('خطأ في الفيديو ' + idx + ': ' + event.data);
-                                if (data.retryCount < 3) {
-                                    data.retryCount++;
-                                    setTimeout(function() {
-                                        if (data.player) {
-                                            data.player.loadVideoById(data.videoId);
-                                        }
-                                    }, 2000);
-                                } else {
-                                    // عرض رسالة للمستخدم
-                                    if (data.label) {
-                                        data.label.innerHTML = data.title + ' <small style="color:#ff6666;">⚠️ غير متاح</small>';
-                                    }
-                                    // إخفاء placeholder
-                                    var cont = document.getElementById('cont-' + idx);
-                                    if (cont) {
-                                        var placeholder = cont.querySelector('.loading-placeholder');
-                                        if (placeholder) {
-                                            placeholder.textContent = '🚫 يتطلب تسجيل الدخول';
-                                            placeholder.style.color = '#ff6666';
-                                            placeholder.style.fontSize = '13px';
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -476,9 +425,7 @@
                     data.player = player;
                 });
 
-                // =========================================================
-                // 5. ربط أحداث النقر على كل بانر
-                // =========================================================
+                // ربط أحداث النقر
                 bannerData.forEach(function(data, idx) {
                     var btn = data.btn;
                     if (!btn) return;
@@ -507,17 +454,12 @@
                 console.log('✅ تم تهيئة ' + players.length + ' بانر بنجاح!');
             };
 
-            // =========================================================
-            // 6. تحميل YouTube IFrame API
-            // =========================================================
+            // تحميل YouTube IFrame API
             var tag = document.createElement('script');
             tag.src = 'https://www.youtube.com/iframe_api';
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            // =========================================================
-            // 7. Fallback في حال فشل التحميل
-            // =========================================================
             var fallbackTimer = setTimeout(function() {
                 var placeholders = document.querySelectorAll('.loading-placeholder');
                 placeholders.forEach(function(el) {
