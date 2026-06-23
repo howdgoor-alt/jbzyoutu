@@ -101,7 +101,6 @@
             height: 100%;
             z-index: 100;
             cursor: pointer;
-            /* semi-transparent to hint it's clickable, but keeps video visible */
             background: transparent;
             transition: background 0.2s;
         }
@@ -249,13 +248,6 @@
             width: 100%;
             max-width: 1400px;
         }
-        .footer-note a {
-            color: #ff0000;
-            text-decoration: none;
-        }
-        .footer-note a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
@@ -270,15 +262,12 @@
         اضغط على أي بانر لإيقاف الفيديو مؤقتًا وفتح الرابط &bull; جميع الفيديوهات تعمل تلقائيًا (صامتة)
     </div>
 
-    <!-- ============================================================ -->
-    <!-- JavaScript: إنشاء 10 بانرات وتشغيل YouTube IFrame API        -->
-    <!-- ============================================================ -->
     <script>
         (function() {
             'use strict';
 
             // =========================================================
-            // 1. قائمة الفيديوهات (10 فيديوهات مختلفة)
+            // 1. قائمة الفيديوهات (10 فيديوهات مختلفة) – تم تصحيحها
             // =========================================================
             var videos = [{
                 id: 'ufhFZluY2gQ',
@@ -286,55 +275,41 @@
                 url: 'https://www.youtube.com/watch?v=ufhFZluY2gQ'
             }, {
                 id: 'S46N2dbSlDE',
-                title: 'vid2',
+                title: 'فيديو 2',
                 url: 'https://www.youtube.com/watch?v=S46N2dbSlDE'
             }, {
                 id: 'LK5_LglXz2k',
-                title: 'vid3',
+                title: 'فيديو 3',
                 url: 'https://www.youtube.com/watch?v=LK5_LglXz2k'
             }, {
-                id: 'gpx3N4Makc',
-                title: 'Luis Fonsi - Despacito',
+                id: 'Ngpx3N4Makc',
+                title: 'فيديو 4',
                 url: 'https://www.youtube.com/watch?v=Ngpx3N4Makc'
             }, {
                 id: 'fJ9rUzIMcZQ',
-                title: 'Mark Ronson - Uptown Funk',
+                title: 'فيديو 5',
                 url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ'
             }, {
                 id: '3JZ_D3ELwOQ',
-                title: 'The Chainsmokers - Closer',
+                title: 'فيديو 6',
                 url: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ'
             }, {
                 id: '7bH5gL7jt7E',
-                title: 'vid4',
+                title: 'فيديو 7',
                 url: 'https://www.youtube.com/watch?v=7bH5gL7jt7E'
             }, {
                 id: 'RoNuqWCgdSc',
-                title: 'Dvid5',
+                title: 'فيديو 8',
                 url: 'https://www.youtube.com/watch?v=RoNuqWCgdSc'
             }, {
                 id: 'DxDvLTycm4Q',
-                title: 'vid6',
+                title: 'فيديو 9',
                 url: 'https://www.youtube.com/watch?v=DxDvLTycm4Q'
             }, {
                 id: '7KLlMDsgxGY',
-                title: 'vid7',
+                title: 'فيديو 10',
                 url: 'https://www.youtube.com/watch?v=7KLlMDsgxGY'
-            }, {
-                id: 'OITul6Ycnxo,
-                title: 'vid8',
-                url: 'https://www.youtube.com/watch?v=OITul6Ycnxo'
-            }, {
-                id: 'mrUNagGWedM',
-                title: 'vid9',
-                url: 'https://www.youtube.com/watch?v=mrUNagGWedM'
-            }, {
-                id: 'iPaqEt8hkf8',
-                title: 'vid7',
-                url: 'https://www.youtube.com/watch?v=iPaqEt8hkf8'
-            }
-                         
-                         ];
+            }];
 
             // =========================================================
             // 2. بناء HTML للبانرات
@@ -356,7 +331,7 @@
                 html += '  <div class="video-label">';
                 html += '    <span class="video-index">' + (index + 1) + '</span>';
                 html += '    <span class="video-title" id="' + labelId + '">';
-                html +=        v.title;
+                html += v.title;
                 html += '      <small>▶</small>';
                 html += '    </span>';
                 html += '  </div>';
@@ -368,10 +343,7 @@
             // =========================================================
             // 3. إعداد بيانات اللاعبين
             // =========================================================
-            var players = []; // سيحتوي على كائنات YT.Player
-            var playerStates = []; // حالة كل لاعب (جاهز / تشغيل / إلخ)
-
-            // لكل بانر نخزن مرجع للزر والبيانات
+            var players = [];
             var bannerData = [];
 
             videos.forEach(function(v, index) {
@@ -415,17 +387,15 @@
                             iv_load_policy: 3,
                             playsinline: 1,
                             rel: 0,
-                            playlist: data.videoId // للتكرار
+                            playlist: data.videoId
                         },
                         events: {
                             onReady: function(event) {
-                                // كتم الصوت والتشغيل التلقائي
                                 event.target.mute();
                                 event.target.playVideo();
                                 data.playerReady = true;
                                 data.player = event.target;
 
-                                // إخفاء placeholder
                                 var cont = document.getElementById('cont-' + idx);
                                 if (cont) {
                                     var placeholder = cont.querySelector('.loading-placeholder');
@@ -434,13 +404,11 @@
                                     }
                                 }
 
-                                // تحديث الـ label
                                 if (data.label) {
                                     data.label.innerHTML = data.title + ' <small>▶ يعمل</small>';
                                 }
                             },
                             onStateChange: function(event) {
-                                // تحديث حالة التشغيل
                                 if (event.data === YT.PlayerState.PLAYING) {
                                     data.isPlaying = true;
                                     if (data.label) {
@@ -464,23 +432,18 @@
                         }
                     });
 
-                    // تخزين مرجع اللاعب
                     players[idx] = player;
                     data.player = player;
                 });
 
-                // =========================================================
-                // 5. ربط أحداث النقر على كل بانر
-                // =========================================================
+                // ربط أحداث النقر
                 bannerData.forEach(function(data, idx) {
                     var btn = data.btn;
                     if (!btn) return;
 
-                    // نستخدم addEventListener
                     btn.addEventListener('click', function(e) {
                         e.preventDefault();
 
-                        // إيقاف / تشغيل الفيديو عند النقر على البانر
                         var player = data.player;
                         if (player && data.playerReady) {
                             var state = player.getPlayerState();
@@ -490,32 +453,20 @@
                                 state === YT.PlayerState.ENDED) {
                                 player.playVideo();
                             } else {
-                                // إذا لم يكن جاهزًا، نحاول التشغيل
                                 player.playVideo();
                             }
                         }
 
-                        // فتح الرابط في نافذة جديدة
                         window.open(data.url, '_blank');
                         return false;
                     });
-
-                    // إضافة تأثير hover خفيف (اختياري)
-                    btn.addEventListener('mouseenter', function() {
-                        // يمكن إضافة تأثيرات هنا
-                    });
                 });
-
-                // =========================================================
-                // 6. (اختياري) تصحيح مشكلة التكرار عند انتهاء الفيديو
-                //    تم ضبط playlist أعلاه للتكرار التلقائي
-                // =========================================================
 
                 console.log('✅ تم تهيئة ' + players.length + ' بانر بنجاح!');
             };
 
             // =========================================================
-            // 7. تحميل YouTube IFrame API
+            // 5. تحميل YouTube IFrame API
             // =========================================================
             var tag = document.createElement('script');
             tag.src = 'https://www.youtube.com/iframe_api';
@@ -523,9 +474,8 @@
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
             // =========================================================
-            // 8. معالجة حالة فشل التحميل (fallback)
+            // 6. Fallback في حال فشل التحميل
             // =========================================================
-            // إذا لم يتم تحميل الـ API خلال 8 ثوانٍ، نظهر رسالة
             var fallbackTimer = setTimeout(function() {
                 var placeholders = document.querySelectorAll('.loading-placeholder');
                 placeholders.forEach(function(el) {
@@ -537,8 +487,6 @@
                 });
             }, 8000);
 
-            // إلغاء الـ timer إذا تم تحميل الـ API بنجاح
-            // (سيتم استدعاء onYouTubeIframeAPIReady)
             var originalReady = window.onYouTubeIframeAPIReady;
             window.onYouTubeIframeAPIReady = function() {
                 clearTimeout(fallbackTimer);
