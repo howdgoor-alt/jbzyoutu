@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>10 YouTube Video Banners - شبكة بانرات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #0f0f0f;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 30px 20px 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page-title {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .page-title span {
+            color: #ff0000;
+        }
+
+        /* ===== GRID ===== */
+        .banner-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* ===== BANNER CARD ===== */
+        .banner-card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid #2a2a2a;
+        }
+
+        .banner-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.9);
+            border-color: #ff000066;
+        }
+
+        /* ===== PLAYER CONTAINER (16:9) ===== */
+        .player-cont {
+            position: relative;
+            width: 100%;
+            background: #000;
+        }
+
+        .player-cont::before {
+            display: block;
+            content: "";
+            padding-top: 56.25%;
+            /* 16:9 */
+        }
+
+        .player-cont .player-iframe-wrap {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .player-cont .player-iframe-wrap iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border: none;
+        }
+
+        /* ===== CLICK OVERLAY ===== */
+        .player-cont .btn-click {
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            cursor: pointer;
+            /* semi-transparent to hint it's clickable, but keeps video visible */
+            background: transparent;
+            transition: background 0.2s;
+        }
+
+        .player-cont .btn-click:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* ===== VIDEO LABEL ===== */
+        .video-label {
+            padding: 12px 16px 14px;
+            color: #eee;
+            font-size: 14px;
+            font-weight: 500;
+            background: #141414;
+            border-top: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .video-label .video-index {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff0000;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .video-label .video-title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: ltr;
+            text-align: left;
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .video-label .video-title small {
+            color: #888;
+            font-weight: 400;
+            font-size: 11px;
+            margin-right: 6px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .banner-grid {
+                gap: 18px;
+            }
+            .page-title {
+                font-size: 22px;
+                margin-bottom: 24px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .banner-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                max-width: 520px;
+            }
+            .page-title {
+                font-size: 20px;
+                padding: 0 10px;
+            }
+            .video-label {
+                padding: 10px 14px 12px;
+                font-size: 13px;
+                flex-wrap: wrap;
+            }
+            .video-label .video-title {
+                white-space: normal;
+                font-size: 12px;
+                text-align: right;
+            }
+            body {
+                padding: 16px 12px 40px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .banner-grid {
+                gap: 14px;
+            }
+            .video-label .video-title {
+                font-size: 11px;
+            }
+            .video-label .video-index {
+                width: 20px;
+                height: 20px;
+                font-size: 10px;
+            }
+        }
+
+        /* ===== LOADING FALLBACK ===== */
+        .player-cont .loading-placeholder {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a0a;
+            color: #555;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .player-cont .loading-placeholder::after {
+            content: "⏳ جاري التحميل…";
+            animation: pulse 1.4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer-note {
+            margin-top: 40px;
+            color: #444;
+            font-size: 13px;
+            text-align: center;
+            border-top: 1px solid #222;
+            padding-top: 24px;
+            width: 100%;
+            max-width: 1400px;
+        }
+        .footer-note a {
+            color: #ff0000;
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="page-title">🎬 <span>10</span> بانرات فيديو · شبكة متجاوبة</h1>
+
+    <div class="banner-grid" id="bannerGrid">
+        <!-- البانرات سيتم إنشاؤها بواسطة JavaScript -->
+    </div>
+
+    <div class="footer-note">
+        اضغط على أي بانر لإيقاف الفيديو مؤقتًا وفتح الرابط &bull; جميع الفيديوهات تعمل تلقائيًا (صامتة)
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- JavaScript: إنشاء 10 بانرات وتشغيل YouTube IFrame API        -->
+    <!-- ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // =========================================================
+            // 1. قائمة الفيديوهات (10 فيديوهات مختلفة)
+            // =========================================================
+            var videos = [{
+                id: 'ufhFZluY2gQ',
+                title: 'فيديو نموذجي 1',
+                url: 'https://www.youtube.com/watch?v=ufhFZluY2gQ'
+            }, {
+                id: 'S46N2dbSlDE',
+                title: 'vid2',
+                url: 'https://www.youtube.com/watch?v=S46N2dbSlDE'
+            }, {
+                id: 'LK5_LglXz2k',
+                title: 'vid3',
+                url: 'https://www.youtube.com/watch?v=LK5_LglXz2k'
+            }, {
+                id: 'gpx3N4Makc',
+                title: 'Luis Fonsi - Despacito',
+                url: 'https://www.youtube.com/watch?v=Ngpx3N4Makc'
+            }, {
+                id: 'fJ9rUzIMcZQ',
+                title: 'Mark Ronson - Uptown Funk',
+                url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ'
+            }, {
+                id: '3JZ_D3ELwOQ',
+                title: 'The Chainsmokers - Closer',
+                url: 'https://www.youtube.com/watch?v=3JZ_D3ELwOQ'
+            }, {
+                id: '7bH5gL7jt7E',
+                title: 'vid4',
+                url: 'https://www.youtube.com/watch?v=7bH5gL7jt7E'
+            }, {
+                id: 'RoNuqWCgdSc',
+                title: 'Dvid5',
+                url: 'https://www.youtube.com/watch?v=RoNuqWCgdSc'
+            }, {
+                id: 'DxDvLTycm4Q',
+                title: 'vid6',
+                url: 'https://www.youtube.com/watch?v=DxDvLTycm4Q'
+            }, {
+                id: '7KLlMDsgxGY',
+                title: 'vid7',
+                url: 'https://www.youtube.com/watch?v=7KLlMDsgxGY'
+            }, {
+                id: 'OITul6Ycnxo,
+                title: 'vid8',
+                url: 'https://www.youtube.com/watch?v=OITul6Ycnxo'
+            }, {
+                id: 'mrUNagGWedM',
+                title: 'vid9',
+                url: 'https://www.youtube.com/watch?v=mrUNagGWedM'
+            }, {
+                id: 'iPaqEt8hkf8',
+                title: 'vid7',
+                url: 'https://www.youtube.com/watch?v=iPaqEt8hkf8'
+            }
+                         
+                         ];
+
+            // =========================================================
+            // 2. بناء HTML للبانرات
+            // =========================================================
+            var grid = document.getElementById('bannerGrid');
+            var html = '';
+
+            videos.forEach(function(v, index) {
+                var playerId = 'player-' + index;
+                var btnId = 'btnClick-' + index;
+                var labelId = 'label-' + index;
+
+                html += '<div class="banner-card" data-index="' + index + '">';
+                html += '  <div class="player-cont" id="cont-' + index + '">';
+                html += '    <div class="loading-placeholder"></div>';
+                html += '    <div class="player-iframe-wrap" id="' + playerId + '"></div>';
+                html += '    <a href="#" class="btn-click" id="' + btnId + '" target="_blank"></a>';
+                html += '  </div>';
+                html += '  <div class="video-label">';
+                html += '    <span class="video-index">' + (index + 1) + '</span>';
+                html += '    <span class="video-title" id="' + labelId + '">';
+                html +=        v.title;
+                html += '      <small>▶</small>';
+                html += '    </span>';
+                html += '  </div>';
+                html += '</div>';
+            });
+
+            grid.innerHTML = html;
+
+            // =========================================================
+            // 3. إعداد بيانات اللاعبين
+            // =========================================================
+            var players = []; // سيحتوي على كائنات YT.Player
+            var playerStates = []; // حالة كل لاعب (جاهز / تشغيل / إلخ)
+
+            // لكل بانر نخزن مرجع للزر والبيانات
+            var bannerData = [];
+
+            videos.forEach(function(v, index) {
+                var btn = document.getElementById('btnClick-' + index);
+                var cont = document.getElementById('cont-' + index);
+                var label = document.getElementById('label-' + index);
+
+                bannerData[index] = {
+                    videoId: v.id,
+                    url: v.url,
+                    title: v.title,
+                    btn: btn,
+                    cont: cont,
+                    label: label,
+                    playerReady: false,
+                    player: null,
+                    isPlaying: false
+                };
+            });
+
+            // =========================================================
+            // 4. YouTube IFrame API - إنشاء جميع اللاعبين
+            // =========================================================
+            window.onYouTubeIframeAPIReady = function() {
+
+                bannerData.forEach(function(data, idx) {
+                    var playerId = 'player-' + idx;
+
+                    var player = new YT.Player(playerId, {
+                        width: '100%',
+                        height: '100%',
+                        videoId: data.videoId,
+                        playerVars: {
+                            controls: 0,
+                            disablekb: 1,
+                            loop: 1,
+                            modestbranding: 1,
+                            showinfo: 0,
+                            fs: 0,
+                            cc_load_policy: 0,
+                            iv_load_policy: 3,
+                            playsinline: 1,
+                            rel: 0,
+                            playlist: data.videoId // للتكرار
+                        },
+                        events: {
+                            onReady: function(event) {
+                                // كتم الصوت والتشغيل التلقائي
+                                event.target.mute();
+                                event.target.playVideo();
+                                data.playerReady = true;
+                                data.player = event.target;
+
+                                // إخفاء placeholder
+                                var cont = document.getElementById('cont-' + idx);
+                                if (cont) {
+                                    var placeholder = cont.querySelector('.loading-placeholder');
+                                    if (placeholder) {
+                                        placeholder.style.display = 'none';
+                                    }
+                                }
+
+                                // تحديث الـ label
+                                if (data.label) {
+                                    data.label.innerHTML = data.title + ' <small>▶ يعمل</small>';
+                                }
+                            },
+                            onStateChange: function(event) {
+                                // تحديث حالة التشغيل
+                                if (event.data === YT.PlayerState.PLAYING) {
+                                    data.isPlaying = true;
+                                    if (data.label) {
+                                        var small = data.label.querySelector('small');
+                                        if (small) small.textContent = '▶ يعمل';
+                                    }
+                                } else if (event.data === YT.PlayerState.PAUSED) {
+                                    data.isPlaying = false;
+                                    if (data.label) {
+                                        var small = data.label.querySelector('small');
+                                        if (small) small.textContent = '⏸ متوقف';
+                                    }
+                                } else if (event.data === YT.PlayerState.ENDED) {
+                                    data.isPlaying = false;
+                                    if (data.label) {
+                                        var small = data.label.querySelector('small');
+                                        if (small) small.textContent = '⟳ يعيد';
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // تخزين مرجع اللاعب
+                    players[idx] = player;
+                    data.player = player;
+                });
+
+                // =========================================================
+                // 5. ربط أحداث النقر على كل بانر
+                // =========================================================
+                bannerData.forEach(function(data, idx) {
+                    var btn = data.btn;
+                    if (!btn) return;
+
+                    // نستخدم addEventListener
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        // إيقاف / تشغيل الفيديو عند النقر على البانر
+                        var player = data.player;
+                        if (player && data.playerReady) {
+                            var state = player.getPlayerState();
+                            if (state === YT.PlayerState.PLAYING) {
+                                player.pauseVideo();
+                            } else if (state === YT.PlayerState.PAUSED ||
+                                state === YT.PlayerState.ENDED) {
+                                player.playVideo();
+                            } else {
+                                // إذا لم يكن جاهزًا، نحاول التشغيل
+                                player.playVideo();
+                            }
+                        }
+
+                        // فتح الرابط في نافذة جديدة
+                        window.open(data.url, '_blank');
+                        return false;
+                    });
+
+                    // إضافة تأثير hover خفيف (اختياري)
+                    btn.addEventListener('mouseenter', function() {
+                        // يمكن إضافة تأثيرات هنا
+                    });
+                });
+
+                // =========================================================
+                // 6. (اختياري) تصحيح مشكلة التكرار عند انتهاء الفيديو
+                //    تم ضبط playlist أعلاه للتكرار التلقائي
+                // =========================================================
+
+                console.log('✅ تم تهيئة ' + players.length + ' بانر بنجاح!');
+            };
+
+            // =========================================================
+            // 7. تحميل YouTube IFrame API
+            // =========================================================
+            var tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // =========================================================
+            // 8. معالجة حالة فشل التحميل (fallback)
+            // =========================================================
+            // إذا لم يتم تحميل الـ API خلال 8 ثوانٍ، نظهر رسالة
+            var fallbackTimer = setTimeout(function() {
+                var placeholders = document.querySelectorAll('.loading-placeholder');
+                placeholders.forEach(function(el) {
+                    if (el.style.display !== 'none') {
+                        el.textContent = '⚠️ تعذر تحميل الفيديو';
+                        el.style.color = '#ff6666';
+                        el.style.fontSize = '13px';
+                    }
+                });
+            }, 8000);
+
+            // إلغاء الـ timer إذا تم تحميل الـ API بنجاح
+            // (سيتم استدعاء onYouTubeIframeAPIReady)
+            var originalReady = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = function() {
+                clearTimeout(fallbackTimer);
+                if (typeof originalReady === 'function') {
+                    originalReady();
+                }
+            };
+
+        })();
+    </script>
+
+</body>
+</html>
